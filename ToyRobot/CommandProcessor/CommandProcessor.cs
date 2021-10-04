@@ -19,12 +19,12 @@ namespace ToyRobot
         {
             CommandLibrary command;
             if (!Enum.TryParse(rawInput[0], true, out command))
-                throw new ArgumentException("Please try with allowed format: PLACE X,Y,F|MOVE|LEFT|RIGHT|REPORT");
+                throw new ArgumentException("Please try with allowed format: PLACE X,Y,F MOVE LEFT RIGHT REPORT");
             return command;
         }
 
         /*Validate and Retun command paramters */
-        InputCommandParameter ICommandProcessor.ValidateAndReturnInputCommandParameters(string[] inputParams)
+        InputCommandParameter ICommandProcessor.ValidateAndReturnInputCommandParameters(string[] inputParams, IRobot robot)
         {
             Directions direction;
             Position position = null;
@@ -32,15 +32,21 @@ namespace ToyRobot
             // Checks that Place command is followed by valid command parameters (X,Y and F toy's face direction).
             if (inputParams.Length != CommandInputCount)
                 throw new ArgumentException("Invalid PLACE command. use format: PLACE X,Y,F");
-
+            
             // Checks that three command parameters are provided for the PLACE command.   
             var commandParams = inputParams[1].Split(',');
-            if (commandParams.Length != ParameterCount)
-                throw new ArgumentException("Invalid PLACE command. use format: PLACE X,Y,F"); ;
+            Enum.TryParse(commandParams[commandParams.Length - 1], true, out direction);
+            if (commandParams.Length != ParameterCount || (robot != null && robot.Position != null))
+            {
+                    direction = robot.Direction;
 
+
+            }
             // Checks the direction which the toy is going to be facing.
-            if (!Enum.TryParse(commandParams[commandParams.Length - 1], true, out direction))
-                throw new ArgumentException("Invalid direction. Please select from one of the following directions: NORTH|EAST|SOUTH|WEST");
+            else if (!Enum.TryParse(commandParams[commandParams.Length - 1], true, out direction))
+                throw new ArgumentException("Invalid direction. Please select from one of the following directions: NORTH EAST SOUTH WEST");
+            //else
+            //    throw new ArgumentException("Invalid PLACE command. use format: PLACE X,Y,F");
 
             var x = Convert.ToInt32(commandParams[0]);
             var y = Convert.ToInt32(commandParams[1]);

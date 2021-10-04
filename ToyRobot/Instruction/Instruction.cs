@@ -29,9 +29,11 @@ namespace ToyRobot
             switch (instruction)
             {
                 case CommandLibrary.Place:
-                    var placeCommandParameter = _mCommandPorcessor.ValidateAndReturnInputCommandParameters(input);
+                    var placeCommandParameter = _mCommandPorcessor.ValidateAndReturnInputCommandParameters(input, _mRobot);
                     if (_mBoard.IsValidTablePosition(placeCommandParameter.Position))
+                    {
                         _mRobot.PlaceRobot(placeCommandParameter.Position, placeCommandParameter.Direction);
+                    }
                     break;
                 case CommandLibrary.Move:
                     var newPosition = _mRobot.GetNextPosition();

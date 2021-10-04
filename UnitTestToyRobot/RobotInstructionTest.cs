@@ -8,7 +8,7 @@ namespace UnitTestToyRobot
     public class TestInstruction
     {
         /// <summary>
-        /// test a valid Place command
+        /// TEST CASE 1
         /// </summary>
         [TestMethod]
         public void UintTest1()
@@ -25,6 +25,74 @@ namespace UnitTestToyRobot
 
             // assert
             Assert.AreEqual("Output: 0,1,NORTH", instruction.GenerateReport());
+        }
+
+        /// <summary>
+        /// TEST CASE 2
+        /// </summary>
+        [TestMethod]
+        public void UintTest2()
+        {
+            // setup
+            ITable board = new Table(5, 5);
+            ICommandProcessor cmdProcessor = new CommandProcessor();
+            IRobot robot = new Robot();
+            var instruction = new Instruction(robot, board, cmdProcessor);
+
+            instruction.processInstruction("PLACE 0,0,NORTH".Split(' '));
+            instruction.processInstruction("LEFT".Split(' '));
+            instruction.processInstruction("REPORT".Split(' '));
+
+            // assert
+            Assert.AreEqual("Output: 0,0,WEST", instruction.GenerateReport());
+        } 
+        /// <summary>
+        /// TEST CASE 3
+        /// </summary>
+        [TestMethod]
+        public void UintTest3()
+        {
+            // setup
+            ITable board = new Table(5, 5);
+            ICommandProcessor cmdProcessor = new CommandProcessor();
+            IRobot robot = new Robot();
+            var instruction = new Instruction(robot, board, cmdProcessor);
+
+            instruction.processInstruction("PLACE 1,2,EAST".Split(' '));
+            instruction.processInstruction("MOVE".Split(' '));
+            instruction.processInstruction("MOVE".Split(' '));
+            instruction.processInstruction("LEFT".Split(' '));
+            instruction.processInstruction("MOVE".Split(' '));
+            instruction.processInstruction("REPORT".Split(' '));
+
+
+            // assert
+            Assert.AreEqual("Output: 3,3,NORTH", instruction.GenerateReport());
+        } 
+
+        /// <summary>
+        /// Test Case in the reuqirement
+        /// </summary>
+        [TestMethod]
+        public void UintTest4()
+        {
+            // setup
+            ITable board = new Table(5, 5);
+            ICommandProcessor cmdProcessor = new CommandProcessor();
+            IRobot robot = new Robot();
+            var instruction = new Instruction(robot, board, cmdProcessor);
+
+            instruction.processInstruction("PLACE 1,2,EAST".Split(' '));
+            instruction.processInstruction("MOVE".Split(' '));
+            instruction.processInstruction("LEFT".Split(' '));
+            instruction.processInstruction("MOVE".Split(' '));
+            instruction.processInstruction("PLACE 3,1".Split(' '));
+            instruction.processInstruction("MOVE".Split(' '));
+            instruction.processInstruction("REPORT".Split(' '));
+
+
+            // assert
+            Assert.AreEqual("Output: 3,2,NORTH", instruction.GenerateReport());
         }
         /// <summary>
         /// Invalid Place Instruction. Outside the table dimentions

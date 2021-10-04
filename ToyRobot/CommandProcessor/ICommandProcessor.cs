@@ -13,6 +13,6 @@ namespace ToyRobot
         CommandLibrary ValidateandReturnCommand(string[] rawInput);
 
 
-        InputCommandParameter ValidateAndReturnInputCommandParameters(string[] inputParams);
+        InputCommandParameter ValidateAndReturnInputCommandParameters(string[] inputParams, IRobot robot);
     }
 }
