@@ -7,7 +7,7 @@ Robot movement code c#
 <PRE><B>Instructions</B></PRE>
 
 1) This is a C# Console application and can be executed by downloading the source code and execting the the program in Visual Studio 2019.
-2) Users can enter the following commands using the windows Consol
+2) Users can enter the following commands using the windows Console
 
 PLACE X, Y, DIRECTION
 MOVE
@@ -15,4 +15,4 @@ LEFT
 RIGHT
 REPORT
 
-3) Type "EXIT" on the Consol window to terminate the application.
+3) Type "EXIT" on the Console window to terminate the application.
